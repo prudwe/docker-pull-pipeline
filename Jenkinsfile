@@ -23,8 +23,8 @@ pipeline {
                     def hostPort = params.HOST_PORT
                     def containerPort = params.CONTAINER_PORT
                     
-                    docker.withRun("-p ${hostPort}:${containerPort} ${params.DOCKER_IMAGE_NAME}:latest") {
-                        // Additional commands to run inside the container (if needed)
+                    withDockerContainer(args: '-dt -p ${HOST_PORT}:${CONTAINER_PORT}', image: 'prudwe/ecomm' {
+                        
                     }
                 }
             }
