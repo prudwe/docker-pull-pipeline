@@ -23,11 +23,10 @@ pipeline {
                     def hostPort = params.HOST_PORT
                     def containerPort = params.CONTAINER_PORT
                     
-                    withDockerContainer(args: '-dt -p ${HOST_PORT}:${CONTAINER_PORT}', image: 'prudwe/ecomm' {
+                    withDockerContainer(args: '-dt -p ${HOST_PORT}:${CONTAINER_PORT}', image: 'prudwe/ecomm')
                         
                     }
                 }
             }
         }
     }
-}
