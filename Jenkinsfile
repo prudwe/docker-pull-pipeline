@@ -2,11 +2,9 @@ pipeline {
     agent any
     
     parameters {
-        string(name: 'DOCKER_IMAGE_NAME', description: 'Enter the Docker image name (format: username/image_name)', defaultValue: '')
-    }
-    
-    environment {
-        DOCKER_HUB_CREDENTIALS = credentials('docker-credentials')
+        string(name: 'DOCKER_IMAGE_NAME', defaultValue: '', description: 'Docker image name')
+        string(name: 'HOST_PORT', defaultValue: '', description: 'Host port to map to container port')
+        string(name: 'CONTAINER_PORT', defaultValue: '', description: 'Container port to expose')
     }
     
     stages {
@@ -19,11 +17,15 @@ pipeline {
                 }
             }
         }
-        
         stage('Run Docker Container') {
             steps {
                 script {
-                    docker.run(params.DOCKER_IMAGE_NAME)
+                    def hostPort = params.HOST_PORT
+                    def containerPort = params.CONTAINER_PORT
+                    
+                    docker.withRun("-p ${hostPort}:${containerPort} ${params.DOCKER_IMAGE_NAME}:latest") {
+                        // Additional commands to run inside the container (if needed)
+                    }
                 }
             }
         }
