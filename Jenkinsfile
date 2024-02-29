@@ -2,7 +2,7 @@ pipeline {
     agent any
     
     parameters {
-        string(name: 'DOCKER_IMAGE', defaultValue: 'prudwe/ecomm:latest', description: 'Name of the Docker image to pull from Docker Hub')
+        string(name: 'DOCKER_IMAGE', defaultValue: '', description: 'Name of the Docker image to pull from Docker Hub')
         string(name: 'PORT_MAPPING', defaultValue: '8080:7777', description: 'Port mapping for running the container (e.g., <host_port>:<container_port>)')
     }
     
@@ -18,7 +18,7 @@ pipeline {
         stage('Run Docker Container') {
             steps {
                 script {
-                    def dockerCommand = "docker run -d  ${params.PORT_MAPPING} ${params.DOCKER_IMAGE}"
+                    def dockerCommand = "docker run -d -p ${params.PORT_MAPPING} ${params.DOCKER_IMAGE}"
                     sh label: 'Run Docker Command', script: dockerCommand
                 }
             }
