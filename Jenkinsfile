@@ -18,7 +18,7 @@ pipeline {
         stage('Run Docker Container') {
             steps {
                 script {
-                    def dockerCommand = "docker run -d -p ${params.PORT_MAPPING} ${params.DOCKER_IMAGE}"
+                    def dockerCommand = "docker run -d  ${params.PORT_MAPPING} ${params.DOCKER_IMAGE}"
                     sh label: 'Run Docker Command', script: dockerCommand
                 }
             }
